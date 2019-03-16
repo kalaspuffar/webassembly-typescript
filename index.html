@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <h1>The answer to life the universe and everything is <span id="result"></span></h1>
+    
+    <script>
+        fetch("build/optimized.wasm")
+            .then(response => response.arrayBuffer())
+            .then(buffer => WebAssembly.instantiate(buffer))
+            .then(module => {
+                var exports = module.instance.exports;
+                var addFunc = exports.add;
+                var mulFunc = exports.multiply;
+
+                document.getElementById('result').innerHTML = mulFunc(21, 2);
+
+                console.log(addFunc(5,9));
+            });        
+    </script>
+</body>
+</html>
